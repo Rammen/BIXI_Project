@@ -15,11 +15,11 @@ This project aims to better understand how weather (e.g. temperature, rain) impa
 
 # Project Steps
 
-## Step 1: Scope the Project and Gather Data
+## [Scope the Project, Gathering Data & Exploration](Data Exploration.ipynb)
 
 In this first and important step, I selected the dataset necessary to answer the questions defined above. Exploration of the dataset was completed using Pandas and some vizualisation tools (e.g. matplotlib, geopandas). 
 
-### [Datasets & Exploration](data_exploration.ipynb)
+### Datasets & Exploration
 First, I took data from BIXI and found some complementary weather data matching the time period of BIXI activity. Since winter is full of snow and cold, BIXI only opperates its bikes from mid-april to the end of November based on snow conditions.
 
 BIXI has many logs per day, thus, I only used data from 2020 to explore the datasets (e.g. variables, missing values). 
@@ -34,3 +34,14 @@ BIXI has many logs per day, thus, I only used data from 2020 to explore the data
 **Weather**:
 - [Montreal Climate - Historical Data](https://climate.weather.gc.ca/historical_data/search_historic_data_e.html) 
 	- Hourly and daily weather in Montreal
+    
+    
+## [Data Modeling & Pipeline Planification] (Data Modeling and Data Pipeline.ipynb)
+
+In this second step, I started to plan how I would model the data to facilitate the analytics goals defined above. 
+
+I choose a star-schema since I had one main information (BIXI logs) and many secondary datasets linked to these logs (weather, station, date) and not all analyses requires the same secondary datasets. More details can be found in the [notebook](Data Modeling and Data Pipeline.ipynb). 
+
+![Schema of Data Modeling](images/data_modeling.png)
+
+Based on this schema, I outlined the different steps I will take to create the data pipeline of this project. 
