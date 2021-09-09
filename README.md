@@ -1,4 +1,7 @@
 # BIXI Project
+
+![Udacity Logo](images/udacity_logo.png) ![BIXI Logo](images/bixi_logo.png) 
+
 This project is part of the Capstone project for the [Data Engineering Nanodegree](https://www.udacity.com/course/data-engineer-nanodegree--nd027). 
 
 This project aims to better understand how weather (e.g. temperature, rain) impacts the number of biking rides completed by BIXI users, a sharing bike company located in Montréal, Canada. 
@@ -36,7 +39,7 @@ BIXI has many logs per day, thus, I only used data from 2020 to explore the data
 	- Hourly and daily weather in Montreal
     
     
-## [Data Modeling & Pipeline Planification] (Data Modeling and Data Pipeline.ipynb)
+## [Data Modeling & Pipeline Planification](Data Modeling and Data Pipeline.ipynb)
 
 In this second step, I started to plan how I would model the data to facilitate the analytics goals defined above. 
 
