@@ -40,15 +40,14 @@ class UploadToS3Operator(BaseOperator):
             uploaded_files = 0
             for filename in files:
                 try: 
-                    self.log.info(f"Uplodaing data from {filename} into S3")
+                    self.log.info(f"Uploading data from {filename} into S3")
                     hook.load_file(filename=f"{self.foldername}{filename}", key=filename, bucket_name=self.bucketname, replace=self.replace)
                     uploaded_files+=1
                     
-                except:
+                except ValueError:
                     self.log.info(f"File {filename} is already loaded in S3. Use replace=True when creating the operator if you want to replace this file")
 
             if uploaded_files > 0:
                 self.log.info(f"Successfuly uploaded {uploaded_files}/{len(files)} files from {self.foldername} into S3")
             elif uploaded_files == 0:
                 self.log.info(f"No files were loaded in S3, this step was skipped")
-                raise AirflowSkipException
