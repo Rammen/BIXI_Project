@@ -18,7 +18,7 @@ This project aims to better understand how weather (e.g. temperature, rain) impa
 
 # Project Steps
 
-## [Scope the Project, Gathering Data & Exploration](Data Exploration.ipynb)
+## [Scope the Project, Gathering Data & Exploration](DataExploration.ipynb)
 
 In this first and important step, I selected the dataset necessary to answer the questions defined above. Exploration of the dataset was completed using Pandas and some vizualisation tools (e.g. matplotlib, geopandas). 
 
@@ -39,7 +39,7 @@ BIXI has many logs per day, thus, I only used data from 2020 to explore the data
 	- Hourly and daily weather in Montreal
     
     
-## [Data Modeling & Pipeline Planification](Data Modeling and Data Pipeline.ipynb)
+## [Data Modeling & Pipeline Planification](DataModeling_DataPipeline.ipynb)
 
 In this second step, I started to plan how I would model the data to facilitate the analytics goals defined above. 
 
@@ -48,3 +48,14 @@ I choose a star-schema since I had one main information (BIXI logs) and many sec
 ![Schema of Data Modeling](images/data_modeling.png)
 
 Based on this schema, I outlined the different steps I will take to create the data pipeline of this project. 
+
+## [Pipeline Creation](BIXI_pipeline.py)
+
+**Creation of the pipeline with Apache Airflow**
+The following operators are ready: 
+
+	✓ Transforming XLM files (for weather) into CSV since redshift does not support easily XLM files
+	
+	✓ Transfering local files to S3
+	
+	✓ Creating empty tables (fact + dimensions) in Redshift
