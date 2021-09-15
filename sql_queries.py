@@ -15,7 +15,6 @@ sql_empty_trips = """
         is_member     BOOL )
     """
 
-
 sql_empty_stations = """
     CREATE TABLE IF NOT EXISTS public.stations (
         station_id   int          PRIMARY KEY,
@@ -30,3 +29,20 @@ sql_empty_weather = """
         temperature    real,
         precipitation  real )
     """
+
+sql_trips_staging =  """
+    CREATE TABLE IF NOT EXISTS public.trips_staging (
+        start_station_code  int, 
+        end_station_code    int,
+        start_date          timestamp,
+        end_date            timestamp,
+        duration_sec        int,
+        is_member           BOOL)    """
+
+sql_stations_staging =  """
+    CREATE TABLE IF NOT EXISTS public.station_staging (
+        code       int, 
+        name       varchar(256),
+        latitude   real,
+        longitude  real) 
+     """

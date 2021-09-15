@@ -1,6 +1,7 @@
 # BIXI Project
 
-![Udacity Logo](images/udacity_logo.png) ![BIXI Logo](images/bixi_logo.png) 
+![BIXI Logo](images/bixi_logo.png) 
+![Udacity Logo](images/udacity_logo.png)
 
 This project is part of the Capstone project for the [Data Engineering Nanodegree](https://www.udacity.com/course/data-engineer-nanodegree--nd027). 
 
