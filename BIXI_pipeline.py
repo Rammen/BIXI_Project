@@ -35,10 +35,10 @@ This sections work on the setup of the data prior the ETL:
 3. Create empty tables in Redshift if they do not exists
 """
 
-# start_operator = DummyOperator(task_id='Begin_execution', dag=dag)
+start_operator = DummyOperator(task_id='Begin_execution', dag=dag)
 
 # Clean Weather
-# weather_XML_to_CSV = XmlToCsvOperator(
+weather_XML_to_CSV = XmlToCsvOperator(
 #     task_id='Weather_XML_to_CSV',
 #     dag=dag,
 #     xml_folder='home/workspace/airflow/dags/raw_data/xml_weather/', 
@@ -46,21 +46,23 @@ This sections work on the setup of the data prior the ETL:
 #     sub_document='./stationdata')
 
 # Upload the raw data into S3
-# upload_stations_s3 = UploadToS3Operator(
-#     task_id='Upload_Stations_S3',
-#     dag=dag,
-#     s3_connection="S3_conn",
-#     foldername="home/workspace/airflow/dags/raw_data/raw_stations/",
-#     bucketname="bixi-project-udacity", 
-#     replace=False)
-# upload_weather_s3 = UploadToS3Operator(
-#     task_id='Upload_Weather_S3',
-#     dag=dag,
-#     s3_connection="S3_conn",
-#     foldername="home/workspace/airflow/dags/raw_data/raw_weather/",
-#     bucketname="bixi-project-udacity", 
-#     replace=False)
-# upload_bixi_trips_s3 = UploadToS3Operator(
+upload_stations_s3 = UploadToS3Operator(
+    task_id='Upload_Stations_S3',
+    dag=dag,
+    s3_connection="S3_conn",
+    foldername="home/workspace/airflow/dags/raw_data/raw_stations/",
+    bucketname="bixi-project-udacity", 
+    replace=False)
+
+upload_weather_s3 = UploadToS3Operator(
+    task_id='Upload_Weather_S3',
+    dag=dag,
+    s3_connection="S3_conn",
+    foldername="home/workspace/airflow/dags/raw_data/raw_weather/",
+    bucketname="bixi-project-udacity", 
+    replace=False)
+
+upload_bixi_trips_s3 = UploadToS3Operator(
 #     task_id='Upload_BIXI_trips_S3',
 #     dag=dag,
 #     s3_connection="S3_conn",
@@ -69,17 +71,19 @@ This sections work on the setup of the data prior the ETL:
 #     replace=False)
 
 # Create empty table in Redshift (for fact & dimensions tables)
-# create_trips_empty = EmptyTableOperator(
-#     task_id='Create_trips_table_Redshift',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     create_table_sql=sql_empty_trips)
-# create_stations_empty = EmptyTableOperator(
-#     task_id='Create_stations_table_Redshift',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     create_table_sql=sql_empty_stations)
-# create_weather_empty = EmptyTableOperator(
+create_trips_empty = EmptyTableOperator(
+    task_id='Create_trips_table_Redshift',
+    dag=dag,
+    redshift_conn_id="redshift",
+    create_table_sql=sql_empty_trips)
+
+create_stations_empty = EmptyTableOperator(
+    task_id='Create_stations_table_Redshift',
+    dag=dag,
+    redshift_conn_id="redshift",
+    create_table_sql=sql_empty_stations)
+
+create_weather_empty = EmptyTableOperator(
 #     task_id='Create_weather_table_Redshift',
 #     dag=dag,
 #     redshift_conn_id="redshift",
@@ -95,29 +99,32 @@ Extract-transform-load (ETL) pipeline:
 """
 
 #Bixi trips pipeline
-# create_trips_staging = EmptyTableOperator(
-#     task_id='Create_trips_StagingTable_Redshift',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     create_table_sql=sql_trips_staging)
-# fill_staging_trips = StageToRedshiftOperator(
-#     task_id='fill_staging_trips',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     aws_credentials_id="aws_credentials",
-#     target_table="public.trips_staging",
-#     columns_sql="start_date, start_station_code, end_date, end_station_code, duration_sec, is_member",
-#     s3_bucket="s3://bixi-project-udacity/",
-#     s3_key=["bixi_trips_2020.csv"])
-# transform_trips_data = TransformDataOperator(
-#     task_id='transform_trips_data',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     target_table="trips",
-#     columns="station_start, station_end, date_start, date_end, trip_duration, is_member, weather_id",
-#     raw_data="start_station_code, end_station_code, start_date, end_date, duration_sec, is_member, trunc(start_date)",
-#     data_source ="public.trips_staging")
-# drop_trips_staging = DropTableOperator(
+create_trips_staging = EmptyTableOperator(
+    task_id='Create_trips_StagingTable_Redshift',
+    dag=dag,
+    redshift_conn_id="redshift",
+    create_table_sql=sql_trips_staging)
+
+fill_staging_trips = StageToRedshiftOperator(
+    task_id='fill_staging_trips',
+    dag=dag,
+    redshift_conn_id="redshift",
+    aws_credentials_id="aws_credentials",
+    target_table="public.trips_staging",
+    columns_sql="start_date, start_station_code, end_date, end_station_code, duration_sec, is_member",
+    s3_bucket="s3://bixi-project-udacity/",
+    s3_key=["bixi_trips_2020.csv"])
+
+transform_trips_data = TransformDataOperator(
+    task_id='transform_trips_data',
+    dag=dag,
+    redshift_conn_id="redshift",
+    target_table="trips",
+    columns="station_start, station_end, date_start, date_end, trip_duration, is_member, weather_id",
+    raw_data="start_station_code, end_station_code, start_date, end_date, duration_sec, is_member, trunc(start_date)",
+    data_source ="public.trips_staging")
+
+drop_trips_staging = DropTableOperator(
 #     task_id='drop_trips_staging',
 #     dag=dag,
 #     redshift_conn_id="redshift",
@@ -129,37 +136,40 @@ create_station_staging = EmptyTableOperator(
     dag=dag,
     redshift_conn_id="redshift",
     create_table_sql=sql_stations_staging)
-# fill_staging_trips = StageToRedshiftOperator(
-#     task_id='fill_staging_trips',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     aws_credentials_id="aws_credentials",
-#     target_table="public.trips_staging",
-#     columns_sql="start_date, start_station_code, end_date, end_station_code, duration_sec, is_member",
-#     s3_bucket="s3://bixi-project-udacity/",
-#     s3_key=["bixi_trips_2020.csv"])
-# transform_trips_data = TransformDataOperator(
-#     task_id='transform_trips_data',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     target_table="trips",
-#     columns="station_start, station_end, date_start, date_end, trip_duration, is_member, weather_id",
-#     raw_data="start_station_code, end_station_code, start_date, end_date, duration_sec, is_member, trunc(start_date)",
-#     data_source ="public.trips_staging")
-# drop_trips_staging = DropTableOperator(
-#     task_id='drop_trips_staging',
-#     dag=dag,
-#     redshift_conn_id="redshift",
-#     target_table="trips_staging")
+
+fill_staging_station = StageToRedshiftOperator(
+    task_id='fill_staging_stations',
+    dag=dag,
+    redshift_conn_id="redshift",
+    aws_credentials_id="aws_credentials",
+    target_table="public.station_staging",
+    columns_sql="code, name, latitude, longitude",
+    s3_bucket="s3://bixi-project-udacity/",
+    s3_key=["stations_2020.csv"])
+
+transform_station_data = TransformDataOperator(
+    task_id='transform_stations_data',
+    dag=dag,
+    redshift_conn_id="redshift",
+    target_table="stations",
+    columns="station_id, latitude, longitude, name",
+    raw_data="code, latitude, longitude, name",
+    data_source ="public.station_staging")
+
+drop_station_staging = DropTableOperator(
+    task_id='drop_station_staging',
+    dag=dag,
+    redshift_conn_id="redshift",
+    target_table="station_staging")
 
 """
 Pipeline organization and tasks dependancies
 """
 # Setup dependancies
-# start_operator >> weather_XML_to_CSV >> upload_weather_s3 >> create_weather_empty >> setup_complete_operator
-# start_operator >> upload_bixi_trips_s3 >> create_trips_empty >> setup_complete_operator
-# start_operator >> upload_stations_s3 >> create_stations_empty >> setup_complete_operator
+start_operator >> weather_XML_to_CSV >> upload_weather_s3 >> create_weather_empty >> setup_complete_operator
+start_operator >> upload_bixi_trips_s3 >> create_trips_empty >> setup_complete_operator
+start_operator >> upload_stations_s3 >> create_stations_empty >> setup_complete_operator
 
 # ETL
-# setup_complete_operator >> create_trips_staging >> transform_trips_data >> drop_trips_staging
-setup_complete_operator >> create_station_staging
+setup_complete_operator >> create_trips_staging >> transform_trips_data >> drop_trips_staging
+setup_complete_operator >> create_station_staging >> fill_staging_station >> drop_station_staging
