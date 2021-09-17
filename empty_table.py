@@ -10,7 +10,7 @@ Create empty table in redshift
 class EmptyTableOperator(BaseOperator):
     
     # UI colour in Apache Airflow
-    ui_color = '#358140'
+    ui_color = '#b2b4b8'
     
     
     @apply_defaults

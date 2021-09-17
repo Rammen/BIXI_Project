@@ -10,7 +10,7 @@ Transform data into fact and dimension tables
 class TransformDataOperator(BaseOperator):
     
     # UI colour in Apache Airflow
-    ui_color = '#358140'
+    ui_color = '#55b0e1'
     
     transform_sql = """ 
         INSERT INTO {} ({})

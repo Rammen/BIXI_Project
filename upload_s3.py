@@ -13,7 +13,7 @@ By default, this operator will skip a file if it is already in S3
 class UploadToS3Operator(BaseOperator):
     
     # UI colour in Apache Airflow
-    ui_color = '#358140'
+    ui_color = '#b2b4b8'
     
     
     @apply_defaults

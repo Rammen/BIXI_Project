@@ -10,10 +10,10 @@ Drop table if they exist in Redshift
 class DropTableOperator(BaseOperator):
     
     # UI colour in Apache Airflow
-    ui_color = '#358140'
+    ui_color = '#55b0e1'
     
-#     transform_sql = """DROP TABLE IF EXISTS {}"""
-    transform_sql = """TRUNCATE TABLE {}"""
+    transform_sql = """DROP TABLE IF EXISTS {}"""
+#     transform_sql = """TRUNCATE TABLE {}"""
     
     @apply_defaults
     def __init__(self,

@@ -13,7 +13,7 @@ Take a folder with XML file and for each file:
 class XmlToCsvOperator(BaseOperator):
     
     # UI colour in Apache Airflow
-    ui_color = '#358140'
+    ui_color = '#b2b4b8'
        
     @apply_defaults
     def __init__(self,
@@ -45,5 +45,5 @@ class XmlToCsvOperator(BaseOperator):
                 continue
 
             self.log.info(f"Creating {file} in CSV format in '{self.csv_folder}' folder")
-#             weather = pd.read_xml(f"{self.xml_folder}/{file}", self.sub_document) # Requires Pandas version higher than 1.3.0
-#             weather.to_csv(f"{self.csv_folder}/{file[:-3]}csv")
+            weather = pd.read_xml(f"{self.xml_folder}/{file}", self.sub_document) # Requires Pandas version higher than 1.3.0
+            weather.to_csv(f"{self.csv_folder}/{file[:-3]}csv")

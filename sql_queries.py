@@ -46,3 +46,28 @@ sql_stations_staging =  """
         latitude   real,
         longitude  real) 
      """
+
+sql_weather_staging =  """
+    CREATE TABLE IF NOT EXISTS public.weather_staging (
+        id                  int,
+        day                 int,
+        month               int,
+        year                int,
+        maxtemp             real,           
+        mintemp             real,
+        meantemp            real,
+        heatdegdays         real,
+        cooldegdays         real,
+        totalrain           real,
+        totalsnow           real,
+        totalprecipitation  real,
+        snowonground        real,
+        dirofmaxgust        real,
+        speedofmaxgust      varchar(256)    ) 
+     """
+
+
+"""SELECT *, to_timestamp(year||month||day, 'YYYYMMDD') AS weather_id
+FROM weather_staging
+JOIN trips ON weather_id=trips.weather_id
+limit 5"""

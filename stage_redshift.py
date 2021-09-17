@@ -13,7 +13,7 @@ class StageToRedshiftOperator(BaseOperator):
 
     
     # UI colour in Apache Airflow
-    ui_color = '#358140'
+    ui_color = '#55b0e1'
     
     # SQL statement to copy data
     copy_sql = """
@@ -25,7 +25,8 @@ class StageToRedshiftOperator(BaseOperator):
         FORMAT AS csv
         DELIMITER ','
         IGNOREHEADER 1
-        timeformat 'YYYY-MM-DD HH:MI:SS';  """
+        timeformat 'YYYY-MM-DD HH:MI:SS'
+        MAXERROR 1;  """
 
     
     @apply_defaults
@@ -67,8 +68,6 @@ class StageToRedshiftOperator(BaseOperator):
                 s3_path,
                 aws_credentials.access_key,
                 aws_credentials.secret_key)
-            
-            self.log.info(formatted_sql)
-        
+                    
             # Run query
             redshift.run(formatted_sql)

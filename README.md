@@ -26,7 +26,7 @@ In this first and important step, I selected the dataset necessary to answer the
 ### Datasets & Exploration
 First, I took data from BIXI and found some complementary weather data matching the time period of BIXI activity. Since winter is full of snow and cold, BIXI only opperates its bikes from mid-april to the end of November based on snow conditions.
 
-BIXI has many logs per day, thus, I only used data from 2020 to explore the datasets (e.g. variables, missing values). 
+BIXI has many logs per day, thus, I only used data from 2020 to explore the datasets (e.g. variables, missing values). But for the full pipeline, I used data from 2018 to 2020.
 
 **BIXI data**:
 - [BIXI open-data](https://bixi.com/fr/donnees-ouvertes)
@@ -59,4 +59,23 @@ The following operators are ready:
 	
 	✓ Transfering local files to S3
 	
-	✓ Creating empty tables (fact + dimensions) in Redshift
+	✓ Creating empty tables (fact + dimensions + staging) in Redshift
+
+	✓ Load data into staging table and transform them into fact and dimension table
+
+	✓ Drop staging table once we are done using them
+
+	✓ Quality checks (x2): no empty table and location of stations are in Montreal
+
+![Data Engineering Pipeline Schema](images/pipeline.png)
+
+
+## D.E. Project Write-Up
+
+What if...
+
+- **The data was increased by 100x.** Imagine we had more cities with BIXI or different brand of bike sharing around the world. We could switch to a data Lake and work with Spark and S3. This would allow to store different types of format (e.g. different company have different types of logs)
+
+- **The pipelines would be run on a daily basis by 7 am every day.** Imagine we would like to update each day the logs with the ones from yesterday. In this case, we could adapt our Apache Airflow pipeline to load new data every morning and compute our analyses for the day.
+
+- **The database needed to be accessed by 100+ people.** Using AWS is perfect for that since it allows many users to work on the same data. 
