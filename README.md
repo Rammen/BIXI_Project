@@ -81,3 +81,8 @@ The following operators were created:
 
 ![Data Engineering Pipeline Schema](images/Pipeline.PNG)
 
+
+## Step 5: Capstone 
+
+This latest step with dicussion about scalability, proof that the table have the good format in Redshift (and pipeline is working) as well as dictionnary can be found in the [Udacity Write Up Notebook](Udacity_WriteUp.ipynb)
+
