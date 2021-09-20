@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 /raw_data
+/redshift_data
 
 # C extensions
 *.so

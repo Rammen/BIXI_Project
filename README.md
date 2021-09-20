@@ -81,13 +81,3 @@ The following operators were created:
 
 ![Data Engineering Pipeline Schema](images/Pipeline.PNG)
 
-
-## D.E. Project Write-Up
-
-What if...
-
-- **The data was increased by 100x.** Imagine if we had more cities with BIXI or different brand of bike sharing around the world. We could switch to a data Lake and work with Spark and S3. This would allow to store different types of format (e.g. different company have different types of logs)
-
-- **The pipelines would be run on a daily basis by 7 am every day.** Imagine we would like to update each day the logs with the ones from yesterday. In this case, we could adapt our Apache Airflow pipeline to load new data every morning and compute our analyses for the day.
-
-- **The database needed to be accessed by 100+ people.** Using AWS is perfect for that since it allows many users to work on the same data. 
