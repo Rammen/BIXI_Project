@@ -84,5 +84,8 @@ The following operators were created:
 
 ## Step 5: Capstone 
 
-This latest step with dicussion about scalability, proof that the table have the good format in Redshift (and pipeline is working) as well as dictionnary can be found in the [Udacity Write Up Notebook](Udacity_WriteUp.ipynb)
+This latest step with dicussion about scalability, proof that the table have the good format in Redshift (and pipeline is working) as well as dictionnary can be found in the [Udacity Write Up Notebook](Udacity_WriteUp.ipynb). You can also find an analysis around daily usage based on temperature to further show that the pipeline is working.  
 
+Interesingly we can see that COVID seems to have had a strong impact on the daily usage of BIXI. Indeed, the first summer after COVID started (2020) we can see that the number of rides drasticaly dropped (which is expected). The correlation between the temperature and number of rides is still very strong (0.708 in 2018-2019 and 0.756 in 2020). 
+
+![Daily Bixi Usage](images/yearly_rides.png) 
